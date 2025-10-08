@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DermaPlus - Loja de Cuidados com a Pele</title>
+  <link rel="stylesheet" href="style.css">
+
+  <!-- EmailJS -->
+  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+  <script>
+    emailjs.init("SUA_PUBLIC_KEY_AQUI");
+  </script>
+</head>
+<body>
+
+  <header>
+    <h1>DermaPlus</h1>
+    <p class="descricao-site">Cuidando da sua pele com o toque de quem entende de beleza e bem-estar.</p>
+    <button id="btn-carrinho">🛒 Carrinho <span id="contador-carrinho">0</span></button>
+  </header>
+
+  <!-- Login de administrador -->
+  <div id="admin-login" class="login-container">
+    <h2>Acesso Administrativo</h2>
+    <input type="email" id="admin-email" placeholder="Seu Gmail">
+    <input type="password" id="admin-senha" placeholder="Sua senha">
+    <button id="btn-login">Entrar</button>
+    <p id="login-status"></p>
+  </div>
+
+  <!-- Carrinho -->
+  <div id="carrinho-container" style="display:none;">
+    <h3>Produtos no Carrinho</h3>
+    <ul id="lista-carrinho"></ul>
+  </div>
+
+  <!-- Produtos -->
+  <main id="produtos-container"></main>
+
+  <!-- Notificações -->
+  <div id="notificacoes"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
