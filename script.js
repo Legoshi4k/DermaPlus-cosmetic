@@ -1,4 +1,4 @@
-// Lista de produtos
+// Lista completa de produtos
 const produtos = [
   { nome: "Kit de Banho", descricao: "Transforme seu banho em um momento único com limpeza, hidratação e perfume duradouro.", preco: "R$ 89,90", imagem: "images/Kit de Banho.jpg.jpeg", estoque: 12 },
   { nome: "Sabonete Íntimo", descricao: "Limpeza suave e fragrância leve de lavanda para cuidado íntimo diário.", preco: "R$ 59,90", imagem: "images/Sabonete Intimo.jpg.jpeg", estoque: 8 },
@@ -6,10 +6,10 @@ const produtos = [
   { nome: "Esfoliante Corporal", descricao: "Pele mais macia e radiante com sensação de renovação a cada uso.", preco: "R$ 79,90", imagem: "images/Esfoliante Corporal.jpg.jpeg", estoque: 6 },
   { nome: "Sabonete Facial Detox", descricao: "Com ingredientes naturais, limpa profundamente e hidrata sua pele.", preco: "R$ 35,00", imagem: "images/Sabonete facial detox.jpg.jpeg", estoque: 20 },
   { nome: "Mascara facial", descricao: "Um momento de cuidado que renova e hidrata, revelando uma pele mais fresca e luminosa.", preco: "R$ 29,90", imagem: "images/Mascara facial detox.jpg.jpeg", estoque: 10 },
-  { nome: "Serum antirrugas", descricao: "Textura leve e de rápida absorção que suaviza linhas finas e devolve firmeza.", preco: "R$ 95,50", imagem: "images/Serum antirrugas.jpg.jpeg", estoque: 5 },
-  { nome: "Skincare", descricao: "Um ritual completo para realçar a beleza natural da pele.", preco: "R$ 79,99", imagem: "images/Skincare.jpg.jpeg", estoque: 7 },
-  { nome: "Kit de skincare", descricao: "Kit perfeito para hidratar e relaxar seu corpo.", preco: "R$ 89,99", imagem: "images/Kit de skincare.jpg.jpeg", estoque: 3 },
-  { nome: "Óleo Corporal", descricao: "Toque leve e hidratante que transforma a pele.", preco: "R$ 25,00", imagem: "images/Óleo Corporal.jpg.jpeg", estoque: 4 },
+  { nome: "Serum antirrugas", descricao: "Textura leve e de rápida absorção que suaviza linhas finas, hidrata profundamente e devolve à pele uma aparência firme e radiante.", preco: "R$ 95,50", imagem: "images/Serum antirrugas.jpg.jpeg", estoque: 5 },
+  { nome: "Skincare", descricao: "Um ritual de cuidado pensado para realçar a beleza natural da sua pele. Fórmulas leves, eficazes e com o toque delicado que ela merece, trazendo frescor, saúde e luminosidade ao seu dia a dia.", preco: "R$ 79,99", imagem: "images/Skincare.jpg.jpeg", estoque: 7 },
+  { nome: "Kit de skincare", descricao: "Um kit perfeito para seu corpo, que pode deixar hidratado e relaxado seu corpo botando seus problemas pra longe.", preco: "R$ 89,99", imagem: "images/Kit de skincare.jpg.jpeg", estoque: 3 },
+  { nome: "Óleo Corporal", descricao: "Toque leve e hidratante que transforma a pele, proporcionando conforto e maciez o dia todo.", preco: "R$ 25,00", imagem: "images/Óleo Corporal.jpg.jpeg", estoque: 4 },
 ];
 
 // Containers
@@ -19,34 +19,35 @@ const carrinhoContainer = document.getElementById("carrinho-container");
 const listaCarrinho = document.getElementById("lista-carrinho");
 const contadorCarrinho = document.getElementById("contador-carrinho");
 const containerNotificacoes = document.getElementById("notificacoes");
+const loginContainer = document.getElementById("login-container");
+const btnLogin = document.getElementById("btn-login");
 
 // Carrinho
 let carrinho = [];
 
-// Login admin
-const adminLogin = document.getElementById("admin-login");
-const btnLogin = document.getElementById("btn-login");
-const emailInput = document.getElementById("admin-email");
-const senhaInput = document.getElementById("admin-senha");
-const loginStatus = document.getElementById("login-status");
-let adminLogado = false;
-
+// Login
 btnLogin.addEventListener("click", () => {
-  const email = emailInput.value.trim();
-  const senha = senhaInput.value.trim();
+  loginContainer.classList.toggle("hidden");
+});
 
-  if (email === "seuemail@gmail.com" && senha === "123456") {
-    adminLogado = true;
-    loginStatus.style.color = "green";
-    loginStatus.textContent = "Login realizado com sucesso!";
-    adminLogin.style.display = "none";
-    notificar("Administrador logado com sucesso!");
+document.getElementById("login-btn").addEventListener("click", () => {
+  const email = document.getElementById("email").value;
+  const senha = document.getElementById("senha").value;
+  const erro = document.getElementById("login-erro");
+
+  if (email === "" || senha === "") {
+    erro.textContent = "Preencha todos os campos!";
+  } else if (!email.includes("@gmail.com")) {
+    erro.textContent = "Digite um Gmail válido.";
   } else {
-    loginStatus.textContent = "E-mail ou senha incorretos.";
+    erro.textContent = "";
+    loginContainer.classList.add("hidden");
+    document.getElementById("produtos-container").classList.remove("hidden");
+    notificar(`Bem-vindo, ${email.split("@")[0]}!`, "normal");
   }
 });
 
-// Função de notificação
+// Notificação
 function notificar(mensagem, tipo = "normal") {
   const div = document.createElement("div");
   div.className = "notificacao" + (tipo === "baixo" ? " baixo" : "");
@@ -56,17 +57,15 @@ function notificar(mensagem, tipo = "normal") {
   setTimeout(() => { div.classList.remove("show"); setTimeout(() => div.remove(), 500); }, 4000);
 }
 
-// Atualizar carrinho
+// Atualiza carrinho
 function atualizarCarrinho() {
   listaCarrinho.innerHTML = "";
   let totalItens = 0;
   carrinho.forEach(item => {
     totalItens += item.quantidade;
     const li = document.createElement("li");
-    li.innerHTML = `
-      ${item.produto.nome} (x${item.quantidade})
-      <button class="remover" data-nome="${item.produto.nome}">Remover</button>
-    `;
+    li.innerHTML = `${item.produto.nome} (x${item.quantidade}) 
+    <button class="remover" data-nome="${item.produto.nome}">Remover</button>`;
     listaCarrinho.appendChild(li);
   });
   contadorCarrinho.textContent = totalItens;
@@ -83,8 +82,8 @@ produtos.forEach((produto, index) => {
   div.className = "produto produto-" + index;
   div.setAttribute("data-nome", produto.nome);
 
-  const estoqueTexto = produto.estoque > 5 ? `<p class="estoque">Estoque: ${produto.estoque}</p>` : 
-                       produto.estoque > 0 ? `<p class="estoque baixo">⚠️ Estoque baixo: ${produto.estoque}</p>` : 
+  const estoqueTexto = produto.estoque > 5 ? `<p class="estoque">Estoque: ${produto.estoque}</p>` :
+                       produto.estoque > 0 ? `<p class="estoque baixo">⚠️ Estoque baixo: ${produto.estoque}</p>` :
                        `<p class="estoque esgotado">❌ Produto esgotado</p>`;
 
   div.innerHTML = `
@@ -100,8 +99,8 @@ produtos.forEach((produto, index) => {
   const estoqueEl = div.querySelector(".estoque-container");
 
   btn.addEventListener("click", () => {
-    if(produto.estoque > 0){
-      produto.estoque -= 1;
+    if(produto.estoque>0){
+      produto.estoque -=1;
 
       // Adiciona ao carrinho
       const itemCarrinho = carrinho.find(item=>item.produto.nome===produto.nome);
@@ -111,24 +110,12 @@ produtos.forEach((produto, index) => {
       atualizarCarrinho();
       notificar(`${produto.nome} adicionado ao carrinho!`);
 
-      // Atualizar estoque
       if(produto.estoque===0){
         estoqueEl.innerHTML=`<p class="estoque esgotado">❌ Produto esgotado</p>`;
         btn.disabled=true;
       } else if(produto.estoque<=5){
         estoqueEl.innerHTML=`<p class="estoque baixo">⚠️ Estoque baixo: ${produto.estoque}</p>`;
         notificar(`⚠️ Estoque baixo de ${produto.nome}: ${produto.estoque} restantes`,"baixo");
-
-        // Envia email se admin estiver logado
-        if(produto.estoque <= 3 && adminLogado){
-          emailjs.send("SEU_SERVICE_ID", "SEU_TEMPLATE_ID", {
-            produto: produto.nome,
-            estoque: produto.estoque,
-          }).then(() => {
-            notificar(`📧 Email enviado: ${produto.nome} quase esgotando!`);
-          }).catch(err => console.error("Erro ao enviar email:", err));
-        }
-
       } else{
         estoqueEl.innerHTML=`<p class="estoque">Estoque: ${produto.estoque}</p>`;
       }
@@ -138,7 +125,7 @@ produtos.forEach((produto, index) => {
   container.appendChild(div);
 });
 
-// Remover item do carrinho
+// Remover item
 listaCarrinho.addEventListener("click", e=>{
   if(e.target.classList.contains("remover")){
     const nome = e.target.getAttribute("data-nome");
@@ -151,9 +138,10 @@ listaCarrinho.addEventListener("click", e=>{
       const estoqueEl = card.querySelector(".estoque-container");
       const btn = card.querySelector(".btn-comprar");
 
-      estoqueEl.innerHTML=`<p class="estoque">Estoque: ${produto.estoque}</p>`;
-      btn.disabled=false;
-
+      if(produto.estoque>0){
+        btn.disabled=false;
+        estoqueEl.innerHTML=`<p class="estoque">Estoque: ${produto.estoque}</p>`;
+      }
       carrinho.splice(index,1);
       atualizarCarrinho();
     }
