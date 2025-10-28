@@ -9,7 +9,7 @@ const produtos = [
   { nome: "Serum antirrugas", descricao: "Textura leve e de rápida absorção que suaviza linhas finas, hidrata profundamente e devolve à pele uma aparência firme e radiante.", preco: "R$ 95,50", imagem: "images/serum-antirrugas.jpg", estoque: 5 },
   { nome: "Skincare", descricao: "Um ritual de cuidado pensado para realçar a beleza natural da sua pele. Fórmulas leves, eficazes e com o toque delicado que ela merece, trazendo frescor, saúde e luminosidade ao seu dia a dia.", preco: "R$ 79,99", imagem: "images/skincare.jpg", estoque: 7 },
   { nome: "Kit de skincare", descricao: "Um kit perfeito para seu corpo, que pode deixar hidratado e relaxado seu corpo botando seus problemas pra longe.", preco: "R$ 89,99", imagem: "images/kit-de-skincare.jpg", estoque: 3 },
-  { nome: "Óleo Corporal", descricao: "Toque leve e hidratante que transforma a pele, proporcionando conforto e maciez o dia todo.", preco: "R$ 25,00", imagem: "images/oleo-corporal.jpg.", estoque: 4 },
+  { nome: "Óleo Corporal", descricao: "Toque leve e hidratante que transforma a pele, proporcionando conforto e maciez o dia todo.", preco: "R$ 25,00", imagem: "images/oleo-corporal.jpg", estoque: 4 },
 ];
 
 // Containers
@@ -147,6 +147,7 @@ listaCarrinho.addEventListener("click", e=>{
     }
   }
 });
+
 
 
 
